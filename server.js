@@ -2,16 +2,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const router = require('./routes.js');
+// const router = require('./routes.js');
+const router = require('./routes/index.js');
+const authRouter = require('./routes/authRoutes.js');
 const cors = require('cors');
 
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const app = express();
-const CONNECT_STRING = 'mongodb+srv://nassadm:mkesso4798@cluster0.ut9gj.mongodb.net/test?retryWrites=true&w=majority';
+
 /* var corsOptions = {
     origin: "http://localhost:4200"
   }; */
 
-mongoose.connect(CONNECT_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connecté à MongoBD Atlas'))
     .catch((err) => console.log(err));
 
@@ -23,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({origin:"http://localhost:4200"}/*corsOptions*/));
 
 app.use('/'/*'/elements'*/, router); // le contexte, la racine des chemins de routage est /elements.. analogie préfixe, indicatif
+app.use('/auth', authRouter);
 
-const PORT = 3000 || env.process.PORT;
+const PORT = 3000 || process.env.PORT;
 app.listen(PORT, () => console.log('Le serveur en attente de requêtes sur le port: ' + PORT));

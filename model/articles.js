@@ -8,13 +8,15 @@ const schemaArticle = mongoose.Schema({
     categorie: String,
     titre: String,
     contenu: String,
-    dateCreation: Date
+    // dateCreation: Date
+    createdAt: Date
+
 }
-    //, { timestamps: true }
+    , { timestamps: true } //
 )
 
 /* const Article = mongoose.model('Article', schemaArticle);
-module.exports = Article;
+module.exports = Article; 
 */
 
 
